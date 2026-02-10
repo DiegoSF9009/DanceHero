@@ -1,10 +1,18 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NotesChecker : MonoBehaviour
 {
     [SerializeField]
 
     private string checkAnimationName = "Check";
+
+    [SerializeField]
+
+    private UnityEvent onNoteChecked;
+    [SerializeField]
+
+    private UnityEvent onNoteMissed;
 
     private GameObject currentNote;
     
@@ -15,19 +23,19 @@ public class NotesChecker : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
     }
 
-     private void OnTriggerEnter(Collider other)
+     private void OnTriggerEnter2D(Collider2D other)
     
     {
-        if (other.CompareTag("Note") && currentNote == other.gameObject)
+        if (other.CompareTag("Note") && currentNote == null)
         {
             
-            currentNote = null;
+            currentNote = other.gameObject;
         }
 
 
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         
         if (other.CompareTag("Note") && currentNote == other.gameObject)
@@ -45,9 +53,14 @@ public class NotesChecker : MonoBehaviour
         animator.Play(checkAnimationName);
         if (currentNote != null)
         {
-            
+            onNoteChecked?.Invoke();
             Destroy(currentNote);
             currentNote = null;
+
+        } 
+        else
+        {
+            onNoteMissed?.Invoke();
 
         }
 

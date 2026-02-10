@@ -6,6 +6,12 @@ public class Note : MonoBehaviour
 
     private float speed = 5f;
 
+    public float Speed 
+    
+    {
+        get {return speed;}
+        set {speed = value;}
+    }    
 
     private Rigidbody2D rb;
 
@@ -17,11 +23,8 @@ public class Note : MonoBehaviour
             rb = GetComponent<Rigidbody2D>();
 
         }
-        rb.velocity = Vector3.down * speed;
+        rb.linearVelocity = Vector3.down * speed;
 
     }
-
-
-
 
 }

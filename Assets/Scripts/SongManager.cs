@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,9 @@ public class SongManager : MonoBehaviour
     private UnityEvent onSongCancel;
     [SerializeField]
     private CharacterData characterData;
+    [SerializeField]
+
+    private NotesManager notesManager;
     private SongData currentSong;
 
     public void SetSong(SongData song) 
@@ -25,6 +29,7 @@ public class SongManager : MonoBehaviour
     {
         SoundManager.instance.PlayMusic(currentSong.songName);
         character.Play(currentSong.animationName, 0, 0f);
+        notesManager.StartNoteChart(currentSong.notesConfig, currentSong.speed);
 
     }
 
@@ -44,5 +49,27 @@ public class SongManager : MonoBehaviour
         character.Play(characterData.idleAnimationName, 0, 0f);
 
     }
+
+    public void FailNote()
+    {
+        
+        StopAllCoroutines();
+        StartCoroutine(PlayFailAnimation());
+        
+
+    }
+
+
+    private IEnumerator PlayFailAnimation()
+    {
+        SoundManager.instance.Play(characterData.failSoundName);
+        yield return new WaitForSeconds(character.GetCurrentAnimatorStateInfo(0).length);
+        character.Play(currentSong.animationName, 0, 0f);
+
+
+
+    }
+
+
 
 }

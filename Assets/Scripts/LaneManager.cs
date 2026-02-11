@@ -14,4 +14,16 @@ public Lane GetLane(int index)
         return lanes[index];
     }
 
+    public int GetLaneCount()
+    {  
+        return lanes.Length;
+    }
+
+
+
+
+
 }
+
+
+

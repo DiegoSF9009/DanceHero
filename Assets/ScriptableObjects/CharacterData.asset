@@ -15,4 +15,4 @@ MonoBehaviour:
   idleAnimationName: Idle
   readyAnimationName: Ready
   failAnimationName: Hit
-  failSoundName: 
+  failSoundName: error
